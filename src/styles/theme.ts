@@ -1,6 +1,16 @@
-import { DefaultTheme } from 'styled-components';
+export interface I_Theme {
+  colors: {
+    primary: string;
+    secondary: string;
+    bgColor: string;
+    secondaryBg: string;
+    textColor: string;
+    secondaryText: string;
+    normalAlpha: string;
+  };
+}
 
-export const light: DefaultTheme = {
+export const light = {
   colors: {
     primary: '#008ECC',
     secondary: '#73C2FB',
@@ -11,7 +21,7 @@ export const light: DefaultTheme = {
     normalAlpha: 'rgba(153, 153, 153, 0.3)',
   },
 };
-export const dark: DefaultTheme = {
+export const dark = {
   colors: {
     primary: '#73C2FB',
     secondary: '#008ECC',
