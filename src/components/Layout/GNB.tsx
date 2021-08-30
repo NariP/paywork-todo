@@ -1,13 +1,14 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import styled from '@emotion/styled';
 import { useTheme } from '@emotion/react';
 import { ToggleSlider } from 'components/ToggleSlider';
-import { FaSun, FaMoon } from 'react-icons/fa';
 import { Button } from 'components/Button';
 
 interface I_GnbProps {
   setTheme: Function;
 }
+
 const GNB: React.FC<I_GnbProps> = ({ setTheme }) => {
   const theme = useTheme();
   return (
@@ -16,24 +17,18 @@ const GNB: React.FC<I_GnbProps> = ({ setTheme }) => {
       <LayoutGroup>
         <SliderWrapper>
           <Label htmlFor={TOGGLE_THEME}>
-            <Icon src="assets/sun.svg" alt="sun" style={{ width: '1em' }} />
+            <Icon src="assets/sun.svg" alt="sun" />
           </Label>
           <ToggleSlider setTheme={setTheme} />
           <Label htmlFor={TOGGLE_THEME}>
-            <Icon
-              src="assets/crescent-moon.svg"
-              alt="moon"
-              style={{ width: '1em' }}
-            />
+            <Icon src="assets/crescent-moon.svg" alt="moon" />
           </Label>
         </SliderWrapper>
-        <LoginBtn
-          type="button"
-          name="login"
-          method={() => console.log('login!')}
-        >
-          로그인
-        </LoginBtn>
+        <Link to="/login">
+          <LoginBtn type="button" name="login">
+            로그인
+          </LoginBtn>
+        </Link>
       </LayoutGroup>
     </Header>
   );

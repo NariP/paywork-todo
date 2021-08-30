@@ -1,7 +1,8 @@
 import React from 'react';
+import { Routes } from './routes';
 
-function App() {
-  return <div>hello world!!</div>;
-}
+const App: React.FC<{ setTheme: Function }> = ({ setTheme }) => {
+  return <Routes setTheme={setTheme} />;
+};
 
 export default App;
