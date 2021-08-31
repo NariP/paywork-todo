@@ -6,6 +6,7 @@ interface I_button {
   eventMethod?: Function;
   method?: Function;
   className?: string;
+  disabled?: boolean;
 }
 const Button: React.FC<I_button> = ({
   children,
@@ -14,6 +15,7 @@ const Button: React.FC<I_button> = ({
   eventMethod,
   method,
   className,
+  disabled,
 }) => {
   const clickHandler = (e: MouseEvent) => {
     eventMethod && eventMethod(e);
@@ -25,6 +27,7 @@ const Button: React.FC<I_button> = ({
       name={name}
       className={className}
       onClick={clickHandler}
+      disabled={disabled}
     >
       {children}
     </StyledButton>
