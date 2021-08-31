@@ -1,12 +1,11 @@
-import React, { MouseEvent, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
+import React, { useEffect } from 'react';
 import { AiOutlineGoogle } from 'react-icons/ai';
 import styled from '@emotion/styled';
-import { auth, googleProvider } from '../../fBase';
-import { signOut, signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
+import { auth } from '../../fBase';
 import { useTheme } from '@emotion/react';
 import { ToggleSlider } from 'components/ToggleSlider';
 import { Button } from 'components/Button';
+import { useUser } from 'utils/hooks';
 
 interface I_GnbProps {
   setTheme: Function;
@@ -14,34 +13,15 @@ interface I_GnbProps {
 
 const GNB: React.FC<I_GnbProps> = ({ setTheme }) => {
   const theme = useTheme();
-  const history = useHistory();
-  const googleClickHandler = async (e: MouseEvent<HTMLButtonElement>) => {
-    try {
-      const res = await signInWithPopup(auth, googleProvider);
-      const credential: any = GoogleAuthProvider.credentialFromResult(res);
-      const token = credential.accessToken;
-      const user = res.user;
-      console.log({ user });
-    } catch (error) {
-      console.error(error);
-    }
-  };
-  const googleLogOut = async () => {
-    try {
-      await signOut(auth);
-      console.info('로그아웃 성공!');
-      history.replace('/');
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  const { userLoading, login, logout, userData } = useUser();
+
   useEffect(() => {
     // NOTE : 로그인, 로그아웃 체크 위해 잠시 넣어둠
     auth.onAuthStateChanged(user => {
       if (user) console.log({ user });
       else console.log('no user');
     });
-  });
+  }, []);
   return (
     <Header theme={theme}>
       <Logo src="assets/IstudyLogo.png" alt="logo" />
@@ -55,13 +35,15 @@ const GNB: React.FC<I_GnbProps> = ({ setTheme }) => {
             <Icon src="assets/crescent-moon.svg" alt="moon" />
           </Label>
         </SliderWrapper>
-        <HeaderBtn type="button" name="google" method={googleClickHandler}>
+
+        <HeaderBtn
+          type="button"
+          name={!userData ? 'google' : 'logout'}
+          method={!userData ? login : logout}
+          disabled={userLoading}
+        >
           <AiOutlineGoogle />
-          로그인
-        </HeaderBtn>
-        <HeaderBtn type="button" name="logout" method={googleLogOut}>
-          <AiOutlineGoogle />
-          로그아웃
+          {userLoading ? '로딩 중...' : !userData ? '로그인' : '로그아웃'}
         </HeaderBtn>
       </LayoutGroup>
     </Header>
@@ -75,7 +57,7 @@ const Header = styled.header(({ theme }) => ({
   alignItems: 'center',
   width: '100%',
   position: 'sticky',
-  padding: '1em 3em',
+  padding: '1em 1.2em',
 }));
 
 const Logo = styled.img({
@@ -101,6 +83,7 @@ const Label = styled.label({
 const Icon = styled.img({
   width: '1em',
 });
+
 const HeaderBtn = styled(Button)(({ theme }) => ({
   display: 'flex',
   color: theme.colors.textColor,
