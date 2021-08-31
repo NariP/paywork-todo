@@ -3,6 +3,7 @@ import styled from '@emotion/styled';
 interface I_button {
   name?: string;
   type: 'submit' | 'reset' | 'button';
+  eventMethod?: Function;
   method?: Function;
   className?: string;
 }
@@ -10,12 +11,13 @@ const Button: React.FC<I_button> = ({
   children,
   name,
   type,
+  eventMethod,
   method,
   className,
 }) => {
   const clickHandler = (e: MouseEvent) => {
-    if (!method) return;
-    method();
+    eventMethod && eventMethod(e);
+    method && method();
   };
   return (
     <StyledButton

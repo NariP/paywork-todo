@@ -1,6 +1,9 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { MouseEvent, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
+import { AiOutlineGoogle } from 'react-icons/ai';
 import styled from '@emotion/styled';
+import { auth, googleProvider } from '../../fBase';
+import { signOut, signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
 import { useTheme } from '@emotion/react';
 import { ToggleSlider } from 'components/ToggleSlider';
 import { Button } from 'components/Button';
@@ -11,6 +14,34 @@ interface I_GnbProps {
 
 const GNB: React.FC<I_GnbProps> = ({ setTheme }) => {
   const theme = useTheme();
+  const history = useHistory();
+  const googleClickHandler = async (e: MouseEvent<HTMLButtonElement>) => {
+    try {
+      const res = await signInWithPopup(auth, googleProvider);
+      const credential: any = GoogleAuthProvider.credentialFromResult(res);
+      const token = credential.accessToken;
+      const user = res.user;
+      console.log({ user });
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  const googleLogOut = async () => {
+    try {
+      await signOut(auth);
+      console.info('로그아웃 성공!');
+      history.replace('/');
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  useEffect(() => {
+    // NOTE : 로그인, 로그아웃 체크 위해 잠시 넣어둠
+    auth.onAuthStateChanged(user => {
+      if (user) console.log({ user });
+      else console.log('no user');
+    });
+  });
   return (
     <Header theme={theme}>
       <Logo src="assets/IstudyLogo.png" alt="logo" />
@@ -24,11 +55,14 @@ const GNB: React.FC<I_GnbProps> = ({ setTheme }) => {
             <Icon src="assets/crescent-moon.svg" alt="moon" />
           </Label>
         </SliderWrapper>
-        <Link to="/login">
-          <LoginBtn type="button" name="login">
-            로그인
-          </LoginBtn>
-        </Link>
+        <HeaderBtn type="button" name="google" method={googleClickHandler}>
+          <AiOutlineGoogle />
+          로그인
+        </HeaderBtn>
+        <HeaderBtn type="button" name="logout" method={googleLogOut}>
+          <AiOutlineGoogle />
+          로그아웃
+        </HeaderBtn>
       </LayoutGroup>
     </Header>
   );
@@ -67,13 +101,18 @@ const Label = styled.label({
 const Icon = styled.img({
   width: '1em',
 });
-const LoginBtn = styled(Button)(({ theme }) => ({
+const HeaderBtn = styled(Button)(({ theme }) => ({
+  display: 'flex',
   color: theme.colors.textColor,
   borderRadius: 10,
   border: `1px solid ${theme.colors.normalAlpha}`,
   boxShadow: `0 3px 5px ${theme.colors.normalAlpha}`,
   ':active': {
     boxShadow: `inset 0 3px 5px ${theme.colors.normalAlpha}`,
+  },
+  svg: {
+    color: theme.colors.primary,
+    marginRight: '0.2em',
   },
 }));
 
