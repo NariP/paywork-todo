@@ -1,2 +1,2 @@
 export { default as Routes } from './Routes';
-export { default as paths } from './paths';
+export { default as PageRoutes } from './page.routes';

@@ -1,9 +1,8 @@
 import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../../module/rootReducer';
-import { loginRequest, logoutRequest } from '../../module/user';
-// import { lsHelper } from 'utils';
-// import { GoogleAuthProvider } from 'firebase/auth';
+import { RootState } from 'module/rootReducer';
+import { loginRequest, logoutRequest } from 'module/user';
+import { lsHelper } from 'utils';
 
 const useUser = () => {
   const dispatch = useDispatch();
@@ -14,18 +13,18 @@ const useUser = () => {
 
   const login = () => {
     dispatch(loginRequest());
-    // if (!userData) return;
-    // const credential: any = GoogleAuthProvider.credentialFromResult(userData);
-    // console.log({ credential });
-    // credential && lsHelper.setItem('token', credential.accessToken);
+    history.push('/dashboard');
   };
 
   const logout = () => {
     dispatch(logoutRequest());
     history.replace('/');
-    // lsHelper.removeItem('token');
   };
 
-  return { userLoading, login, logout, userData };
+  const isAuthenticated = () => {
+    const localData = lsHelper.getItem('user');
+    return localData.user.userData;
+  };
+  return { userLoading, login, logout, userData, isAuthenticated };
 };
 export default useUser;
