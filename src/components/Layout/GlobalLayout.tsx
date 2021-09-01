@@ -21,12 +21,12 @@ const Wrapper = styled.div(({ theme }) => ({
 }));
 const MainSection = styled.main({
   display: 'flex',
-  minWidth: 360,
-  maxWidth: 700,
+  // minWidth: 360,
+  // maxWidth: 700,
   minHeight: '100vh',
   background: 'inherit',
   color: 'inherit',
-  margin: '20px auto 32px',
+  // margin: '20px auto 32px',
 });
 
 export default GlobalLayout;

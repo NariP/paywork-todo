@@ -1,18 +1,11 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-
+import { UserCredential } from '@firebase/auth-types';
 // initial type
 export interface UserState {
   userLoading: boolean;
   userData: any;
   error: any;
 }
-
-// action payload type
-// maybe remove after
-// export type LoginPayload = {
-//   userId: string;
-//   password: string;
-// };
 
 const initialState: UserState = {
   userLoading: false,
@@ -30,7 +23,7 @@ const userSlice = createSlice({
       state.userLoading = true;
       state.error = null;
     },
-    loginSuccess(state: UserState, action: PayloadAction<any>) {
+    loginSuccess(state: UserState, action: PayloadAction<UserCredential>) {
       state.userLoading = false;
       state.userData = action.payload;
     },
