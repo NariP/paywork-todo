@@ -23,7 +23,7 @@ const useUser = () => {
 
   const isAuthenticated = () => {
     const localData = lsHelper.getItem('user');
-    return localData.user.userData;
+    return localData && localData.user.userData;
   };
   return { userLoading, login, logout, userData, isAuthenticated };
 };
