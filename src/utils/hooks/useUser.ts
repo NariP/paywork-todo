@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from 'module/rootReducer';
 import { loginRequest, logoutRequest } from 'module/user';
 import { lsHelper } from 'utils';
+import { ROOTS, ROOTS_DASHBOARD } from 'routes/paths';
 
 const useUser = () => {
   const dispatch = useDispatch();
@@ -13,12 +14,12 @@ const useUser = () => {
 
   const login = () => {
     dispatch(loginRequest());
-    history.push('/dashboard');
+    history.push(ROOTS_DASHBOARD);
   };
 
   const logout = () => {
     dispatch(logoutRequest());
-    history.replace('/');
+    history.replace(ROOTS);
   };
 
   const isAuthenticated = () => {
