@@ -3,7 +3,10 @@ import styled from '@emotion/styled';
 import { Button } from 'components/Button';
 import { Background } from 'pages/Main';
 import { AiOutlineGoogle } from 'react-icons/ai';
+import { MdDashboard } from 'react-icons/md';
 import { useUser } from 'utils/hooks';
+import { Link } from 'react-router-dom';
+import { ROOTS_DASHBOARD } from '../../routes/paths';
 
 const Main = () => {
   const { userLoading, login, logout, isAuthenticated } = useUser();
@@ -27,6 +30,14 @@ const Main = () => {
             {userLoading ? '로딩 중...' : '로그인하여 시작하기'}
           </LoginBtn>
         )}
+        {isAuthenticated() && (
+          <Link to={ROOTS_DASHBOARD}>
+            <LoginBtn type="button">
+              <MdDashboard />
+              대시보드로 이동하기
+            </LoginBtn>
+          </Link>
+        )}
       </ContentsGroup>
     </Wrapper>
   );
@@ -40,10 +51,11 @@ const ContentsGroup = styled.div({
   left: '50%',
   transform: 'translate(-50%, -50%)',
 });
-const Text = styled.h1({
+const Text = styled.div({
   color: '#fcfcfc',
   textShadow: '#333 1px 0 10px',
   fontSize: '3em',
+  fontWeight: 'bolder',
   marginBottom: '0.3em',
 });
 const WaveGroup = styled.div({
