@@ -10,11 +10,14 @@ const Dashboard = () => {
     <Wrapper>
       <Title>대시보드</Title>
       <ButtonGroup>
-        <Link to={PATH_DASHBOARD.todos}>
-          <PlusBtn type="button" name="newTodoPage">
-            <BsPlusSquare />
-          </PlusBtn>
-        </Link>
+        <ButtonLayout>
+          <Link to={PATH_DASHBOARD.todos}>
+            <PlusBtn type="button" name="newTodoPage">
+              <BsPlusSquare />
+            </PlusBtn>
+          </Link>
+          <div>투두 추가하기</div>
+        </ButtonLayout>
       </ButtonGroup>
     </Wrapper>
   );
@@ -32,6 +35,13 @@ const Title = styled.div({
 
 const ButtonGroup = styled.div({
   // marginTop: '1em',
+});
+const ButtonLayout = styled.div({
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'center',
+  alignItems: 'center',
+  width: '14em',
 });
 const PlusBtn = styled(Button)(({ theme }) => ({
   color: theme.colors.secondaryText,

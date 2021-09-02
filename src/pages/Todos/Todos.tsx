@@ -2,8 +2,26 @@ import React from 'react';
 import styled from '@emotion/styled';
 import { BorderBox, TodosBox, TimelineBox } from 'pages/Todos';
 import { getFormattedDate } from 'utils';
+import useTodoService from './useTodoService';
 
 const Todos = () => {
+  const todoServices = useTodoService();
+  const { todos } = todoServices;
+  const alreadyDone = todos
+    .filter(item => item.done && item.start && item.end)
+    .map(({ start, end }) => {
+      const [startHours, startMinutes] = start.split(':');
+      const [endHours, endMinutes] = end.split(':');
+      const startTotalMinute = +startHours * 60 + +startMinutes;
+      const endTotalMinute = +endHours * 60 + +endMinutes;
+      return endTotalMinute - startTotalMinute;
+    });
+  const total = alreadyDone.reduce((acc, cur) => acc + cur, 0);
+  const totalHour = parseInt(String(total / 60), 10);
+  const totalMinutes = total % 60;
+  const totalString = `${!totalHour ? '' : `${totalHour}시간`} ${
+    !totalMinutes ? '' : `${totalMinutes}분`
+  }`;
   const today = getFormattedDate(new Date());
   return (
     <Wrapper style={{ width: '100%' }}>
@@ -11,10 +29,10 @@ const Todos = () => {
       <TopLayoutGroup>
         <BorderBox title="Today" data={today} />
         <BorderBox title="D-Day" data="D - 79" />
-        <BorderBox title="Total" data="6시간 10분" />
+        <BorderBox title="Total" data={totalString} />
       </TopLayoutGroup>
       <LayoutGroup>
-        <TodosBox />
+        <TodosBox todoServices={todoServices} />
         <TimelineBox />
       </LayoutGroup>
     </Wrapper>
