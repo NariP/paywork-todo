@@ -10,8 +10,8 @@ const DashboardLayout: React.FC = ({ children }) => {
     </Wrapper>
   );
 };
-const Wrapper = styled.aside({
+const Wrapper = styled.section({
   display: 'flex',
+  width: '100%',
 });
-
 export default DashboardLayout;

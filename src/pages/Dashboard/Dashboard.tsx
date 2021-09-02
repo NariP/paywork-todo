@@ -19,6 +19,7 @@ const Dashboard = () => {
     </Wrapper>
   );
 };
+// NOTE: 나중에 공용으로 분리 ( wrapper, title )
 const Wrapper = styled.div({
   padding: '2em 3em',
   width: '100%',
@@ -26,9 +27,11 @@ const Wrapper = styled.div({
 const Title = styled.div({
   fontSize: '1.3em',
   fontWeight: 'bold',
+  marginBottom: '1em',
 });
+
 const ButtonGroup = styled.div({
-  marginTop: '1em',
+  // marginTop: '1em',
 });
 const PlusBtn = styled(Button)(({ theme }) => ({
   color: theme.colors.secondaryText,
