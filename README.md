@@ -11,6 +11,5 @@ npm install && npm run start
 
 ## 구현 기능
 - `firebase`를 사용한 로그인 로그아웃 기능
-- todo 생성 기능 
-- todo 삭제 기능
-- todo 완료 기능
+- todolist 화면에 현재 날짜 표시 기능
+- todo 생성 / 삭제 / 완료 기능 
