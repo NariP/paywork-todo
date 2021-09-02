@@ -3,6 +3,7 @@ import { rootReducer } from '../index';
 import createSagaMiddleware from 'redux-saga';
 import rootSaga from 'module/sagas';
 import { lsHelper } from 'utils';
+import { LS_KEY } from '../../utils/constants';
 
 const getStore = () => {
   const devMode = process.env.NODE_ENV === 'development';
@@ -15,7 +16,7 @@ const getStore = () => {
   });
 
   store.subscribe(() => {
-    lsHelper.setItem('user', store.getState());
+    lsHelper.setItem(LS_KEY.USER, store.getState());
   });
 
   sagaMiddleware.run(rootSaga);

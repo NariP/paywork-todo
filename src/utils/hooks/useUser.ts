@@ -4,6 +4,7 @@ import { RootState } from 'module/rootReducer';
 import { loginRequest, logoutRequest } from 'module/user';
 import { lsHelper } from 'utils';
 import { ROOTS, ROOTS_DASHBOARD } from 'routes/paths';
+import { LS_KEY } from '../constants';
 
 const useUser = () => {
   const dispatch = useDispatch();
@@ -23,7 +24,7 @@ const useUser = () => {
   };
 
   const isAuthenticated = () => {
-    const localData = lsHelper.getItem('user');
+    const localData = lsHelper.getItem(LS_KEY.USER);
     return localData && localData.user.userData;
   };
   return { userLoading, login, logout, userData, isAuthenticated };
