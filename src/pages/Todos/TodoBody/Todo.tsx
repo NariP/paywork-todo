@@ -50,7 +50,7 @@ const Todo: React.FC<I_todoProps> = ({ item, idx, todoServices }) => {
       <CheckButton type="button" done={done} method={changeDone}>
         {done ? <BiCheckCircle /> : <BiCircle />}
       </CheckButton>
-      <Task onClick={toggleModal}>{task}</Task>
+      <Task>{task}</Task>
       <Time>{start}</Time>
       <Time>{end}</Time>
       <ColorChip color={color} />
@@ -68,7 +68,7 @@ const Wrapper = styled.div(({ theme }) => ({
   padding: '0.8em',
   border: `1px solid ${theme.colors.normalAlpha}`,
   borderRadius: 10,
-  cursor: 'pointer',
+  // cursor: 'pointer',
 }));
 const CheckButton = styled(Button)<{ done: boolean }>(({ theme, done }) => ({
   color: done ? theme.colors.secondaryText : theme.colors.textColor,

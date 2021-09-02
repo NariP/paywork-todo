@@ -1,9 +1,7 @@
 import React from 'react';
 import { ContentsBox, TodoCreate, TodoBody } from 'pages/Todos';
-import useTodoService from './useTodoService';
 
-const TodosBox = () => {
-  const todoServices = useTodoService();
+const TodosBox: React.FC<{ todoServices: any }> = ({ todoServices }) => {
   return (
     <ContentsBox title="Plan">
       <TodoCreate {...todoServices} />
