@@ -80,7 +80,7 @@ const useTodoService = () => {
     setValue('');
     setStart('');
     setEnd('');
-    setColor('');
+    setColor('#73C2FB');
   };
 
   useEffect(() => {
