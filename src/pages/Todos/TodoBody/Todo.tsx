@@ -52,7 +52,7 @@ const Todo: React.FC<I_todoProps> = ({ item, idx, todoServices }) => {
         {done ? <BiCheckCircle /> : <BiCircle />}
       </CheckButton>
       <ClickZone onClick={toggleModal}>
-        <Task>{task}</Task>
+        <Task done={done}>{task}</Task>
         <Time>{start}</Time>
         <Time>{end}</Time>
         <ColorChip color={color} />
@@ -92,12 +92,14 @@ const Time = styled.div(({ theme }) => ({
   marginRight: '0.5em',
 }));
 
-const Task = styled.div({
+const Task = styled.div<{ done: boolean }>(({ theme, done }) => ({
   width: '70%',
+  color: done ? theme.colors.secondaryText : theme.colors.textColor,
+  textDecoration: done ? 'line-through' : 'none',
   textOverflow: 'ellipsis',
   overflow: 'hidden',
   whiteSpace: 'nowrap',
-});
+}));
 
 const ColorChip = styled.div<{ color: string }>(({ theme, color }) => ({
   background: color,
