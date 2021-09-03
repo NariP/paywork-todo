@@ -2,6 +2,7 @@ import React, { FormEvent } from 'react';
 import { I_todo } from '../useTodoService';
 import styled from '@emotion/styled';
 import { Button } from 'components/Button';
+import { ally } from 'styles/CommonStyle';
 
 interface I_todoEditProps {
   todoServices: any;
@@ -39,10 +40,10 @@ const TodoEdit: React.FC<I_todoEditProps> = ({
     e.preventDefault();
     const modifiedTodo = {
       ...todo,
-      task: value,
-      start,
-      end,
-      color,
+      task: value || todo.task,
+      start: start || todo.start,
+      end: end || todo.end,
+      color: color === '#73C2FB' ? todo.color : color,
     };
     updateTodos(modifiedTodo);
     toggleModal();
@@ -51,26 +52,99 @@ const TodoEdit: React.FC<I_todoEditProps> = ({
 
   return (
     <Wrapper onSubmit={clickHandler}>
-      <Input
-        type="text"
+      <TaskArea
         name="task"
-        value={value}
-        placeholder={todo.task}
+        value={value || todo.task}
         onChange={taskHandler}
+        rows={3}
       />
-      <input type="time" name="start" value={start} onChange={startHandler} />
-      <input type="time" name="end" value={end} onChange={endHandler} />
-      <input type="color" name="color" value={color} onChange={colorHandler} />
-      <Button type="submit" name="editButton">
+      <TimeLayoutGroup>
+        <Time
+          type="time"
+          name="start"
+          value={start || todo.start}
+          onChange={startHandler}
+        />
+        <Time
+          type="time"
+          name="end"
+          value={end || todo.end}
+          onChange={endHandler}
+        />
+        <ColorChip
+          id={`color_${idx}`}
+          type="color"
+          name="color"
+          value={color}
+          onChange={colorHandler}
+        />
+        <ColorLabel
+          htmlFor={`color_${idx}`}
+          color={color === '#73C2FB' ? todo.color : color}
+        />
+      </TimeLayoutGroup>
+      <EditBtn type="submit" name="editButton">
         수정하기
-      </Button>
+      </EditBtn>
     </Wrapper>
   );
 };
 const Wrapper = styled.form({
-  //
+  padding: '1em 1em 0.8em 1em',
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'center',
+  alignItems: 'center',
 });
-const Input = styled.input({
-  //
+const TaskArea = styled.textarea(({ theme }) => ({
+  background: theme.colors.secondaryBg,
+  color: theme.colors.textColor,
+  padding: '0.5em 1em',
+  resize: 'none',
+  width: '100%',
+  borderRadius: 5,
+  border: `1px solid ${theme.colors.normalAlpha}`,
+}));
+const Input = styled.input(({ theme }) => ({
+  background: theme.colors.secondaryBg,
+  color: theme.colors.textColor,
+  borderRadius: 5,
+  border: `1px solid ${theme.colors.normalAlpha}`,
+}));
+const ColorChip = styled(Input)({
+  ...ally,
 });
+
+const ColorLabel = styled.label<{ color: string }>(({ theme, color }) => ({
+  display: 'inline-block',
+  width: '10%',
+  height: '1.6em',
+  background: color || '#73C2FB',
+  borderRadius: 10,
+  border: `1px solid ${theme.colors.normalAlpha}`,
+  cursor: 'pointer',
+}));
+const TimeLayoutGroup = styled.div({
+  margin: '0.8em 0',
+  width: '100%',
+  display: 'flex',
+  justifyContent: 'space-between',
+  alignItems: 'center',
+  'input + input': {
+    marginLeft: '0.5em',
+  },
+  'input + label': {
+    marginLeft: '0.5em',
+  },
+});
+const Time = styled(Input)({
+  width: '45%',
+});
+const EditBtn = styled(Button)(({ theme }) => ({
+  borderRadius: 5,
+  border: `1px solid ${theme.colors.normalAlpha}`,
+  width: '100%',
+  background: theme.colors.secondaryBg,
+  color: theme.colors.textColor,
+}));
 export default TodoEdit;

@@ -38,12 +38,13 @@ const Header = styled.div(({ title, theme }) => ({
   display: 'flex',
 }));
 
-const Title = styled.div({
+const Title = styled.div(({ theme }) => ({
   display: 'block',
   width: '100%',
   overflow: 'hidden',
   textOverflow: 'ellipsis',
   whiteSpace: 'nowrap',
-});
+  borderBottom: `1px solid ${theme.colors.normalAlpha}`,
+}));
 
 export default ModalInner;

@@ -1,5 +1,6 @@
 import React, { useRef, MouseEvent } from 'react';
 import styled from '@emotion/styled';
+import { Portals } from 'components/Portals';
 
 interface IModalProps {
   open: boolean;
@@ -20,9 +21,11 @@ const Modal: React.FC<IModalProps> = ({
     method();
   };
   return (
-    <StyledModal ref={modalRef} open={open} onClick={clickHandler}>
-      {children}
-    </StyledModal>
+    <Portals>
+      <StyledModal ref={modalRef} open={open} onClick={clickHandler}>
+        {children}
+      </StyledModal>
+    </Portals>
   );
 };
 const StyledModal = styled.div<{ open: boolean }>(({ open }) => ({

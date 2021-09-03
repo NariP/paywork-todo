@@ -36,6 +36,7 @@ const Todo: React.FC<I_todoProps> = ({ item, idx, todoServices }) => {
     <Wrapper>
       <Modal open={open} toggleModal={toggleModal} method={reset}>
         <ModalInner
+          title="투두 수정하기"
           closeButton={<CloseButton toggleModal={toggleModal} method={reset} />}
         >
           <TodoEdit
@@ -50,13 +51,15 @@ const Todo: React.FC<I_todoProps> = ({ item, idx, todoServices }) => {
       <CheckButton type="button" done={done} method={changeDone}>
         {done ? <BiCheckCircle /> : <BiCircle />}
       </CheckButton>
-      <Task>{task}</Task>
-      <Time>{start}</Time>
-      <Time>{end}</Time>
-      <ColorChip color={color} />
-      <RemoveBtn type="button" method={removeItem}>
-        <BiTrash />
-      </RemoveBtn>
+      <ClickZone onClick={toggleModal}>
+        <Task>{task}</Task>
+        <Time>{start}</Time>
+        <Time>{end}</Time>
+        <ColorChip color={color} />
+        <RemoveBtn type="button" method={removeItem}>
+          <BiTrash />
+        </RemoveBtn>
+      </ClickZone>
     </Wrapper>
   );
 };
@@ -68,13 +71,20 @@ const Wrapper = styled.div(({ theme }) => ({
   padding: '0.8em',
   border: `1px solid ${theme.colors.normalAlpha}`,
   borderRadius: 10,
-  // cursor: 'pointer',
 }));
 const CheckButton = styled(Button)<{ done: boolean }>(({ theme, done }) => ({
   color: done ? theme.colors.secondaryText : theme.colors.textColor,
   padding: 0,
   marginRight: '0.5em',
+  fontSize: '1em',
 }));
+const ClickZone = styled.div({
+  width: '100%',
+  display: 'flex',
+  justifyItems: 'space-between',
+  alignItems: 'center',
+  cursor: 'pointer',
+});
 const Time = styled.div(({ theme }) => ({
   width: '10%',
   fontSize: '0.5em',
@@ -95,12 +105,15 @@ const ColorChip = styled.div<{ color: string }>(({ theme, color }) => ({
   border: `2px solid ${theme.colors.secondaryBg}`,
   width: '1em',
   height: '1em',
-  marginRight: '0.5em',
+  marginRight: '1em',
 }));
 
 const RemoveBtn = styled(Button)(({ theme }) => ({
   color: theme.colors.textColor,
   padding: 0,
+  fontSize: '1em',
+  display: 'flex',
+  alignItems: 'center',
   ':hover': {
     transform: 'scale(1.1)',
     transition: 'transform 150ms ease',
