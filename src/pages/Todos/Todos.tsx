@@ -19,9 +19,10 @@ const Todos = () => {
   const total = alreadyDone.reduce((acc, cur) => acc + cur, 0);
   const totalHour = parseInt(String(total / 60), 10);
   const totalMinutes = total % 60;
-  const totalString = `${!totalHour ? '' : `${totalHour}시간`} ${
+  const totalString = `${!totalHour ? '' : `${totalHour}시간 `}${
     !totalMinutes ? '' : `${totalMinutes}분`
   }`;
+  console.log({ totalString });
   const today = getFormattedDate(new Date());
   return (
     <Wrapper style={{ width: '100%' }}>
@@ -29,7 +30,7 @@ const Todos = () => {
       <TopLayoutGroup>
         <BorderBox title="Today" data={today} />
         <BorderBox title="D-Day" data="D - 79" />
-        <BorderBox title="Total" data={totalString} />
+        <BorderBox title="Total" data={totalString || '-'} />
       </TopLayoutGroup>
       <LayoutGroup>
         <TodosBox todoServices={todoServices} />
