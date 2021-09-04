@@ -22,7 +22,6 @@ const Todos = () => {
   const totalString = `${!totalHour ? '' : `${totalHour}시간 `}${
     !totalMinutes ? '' : `${totalMinutes}분`
   }`;
-  console.log({ totalString });
   const today = getFormattedDate(new Date());
   return (
     <Wrapper style={{ width: '100%' }}>

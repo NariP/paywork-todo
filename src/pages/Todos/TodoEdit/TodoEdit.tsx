@@ -38,6 +38,21 @@ const TodoEdit: React.FC<I_todoEditProps> = ({
   };
   const clickHandler = (e: FormEvent) => {
     e.preventDefault();
+    const startVal = start || todo.start;
+    const endVal = end || todo.end;
+    if (startVal && endVal) {
+      const [startHour, startMinutes] = startVal.split(':');
+      const [endHour, endMinutes] = endVal.split(':');
+
+      if (+startHour > +endHour) {
+        alert('시작 시간이 끝나는 시간과 같거나 이후일 수는 없습니다');
+        return;
+      }
+      if (+startHour === +endHour && +startMinutes >= +endMinutes) {
+        alert('시작 시간이 끝나는 시간과 같거나 이후일 수는 없습니다');
+        return;
+      }
+    }
     const modifiedTodo = {
       ...todo,
       task: value || todo.task,
