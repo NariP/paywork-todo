@@ -41,6 +41,13 @@ const useTodoService = () => {
     lsHelper.setItem(LS_KEY.TODOS, todos);
   };
 
+  const reset = () => {
+    setValue('');
+    setStart('');
+    setEnd('');
+    setColor('#73C2FB');
+  };
+
   const addTodo = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!value.trim()) {
@@ -74,13 +81,7 @@ const useTodoService = () => {
       },
     ]);
     setTodo('');
-  };
-
-  const reset = () => {
-    setValue('');
-    setStart('');
-    setEnd('');
-    setColor('#73C2FB');
+    reset();
   };
 
   useEffect(() => {
